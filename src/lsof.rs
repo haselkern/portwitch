@@ -36,8 +36,8 @@ fn process_set(x: &[BTreeMap<FieldType, &str>]) -> Option<Process> {
 
     // Process is always the first
     let process = attributes.next()?;
-    let pid = process[&FieldType::Pid].parse().unwrap();
-    let command = process[&FieldType::Command];
+    let pid = process.get(&FieldType::Pid)?.parse().ok()?;
+    let command = process.get(&FieldType::Command)?;
 
     let ports = attributes
         .flat_map(|set| {
